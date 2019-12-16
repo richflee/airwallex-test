@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 const StyledFooter = styled.div`
     background-color: #fff;
-    flex: 0 0 auto;
     width: 100%;
 
     > div {

@@ -15,33 +15,6 @@ export default class Home extends React.Component<any, HomeComponentState> {
         this.state = {
             revealExplanatoryInfo: false
         } as HomeComponentState;
-
-        this._onToggleTextDisplay = this._onToggleTextDisplay.bind(this);
-    }
-
-    _onToggleTextDisplay() {
-        const reveal = !this.state.revealExplanatoryInfo;
-        this.setState({
-            revealExplanatoryInfo: reveal
-        });
-    }
-
-    _renderExplanatoryText() {
-        let explanatoryText; 
-        if (this.state.revealExplanatoryInfo) {
-            explanatoryText = `Welcome to my cool React boilerplate. As you can see I'm trying to jam as many useful tools into it, such as: Styled Components, Jest, Typescript and more.`;
-        } else {
-            explanatoryText = ``;
-        }
-        return <p>{explanatoryText}</p>;
-    }
-
-    _toggleMessageButtonText() {
-        if (this.state.revealExplanatoryInfo) {
-            return `Hide welcome message`;
-        } else {
-            return `Show welcome message`;
-        }
     }
 
     render() {
@@ -51,43 +24,24 @@ export default class Home extends React.Component<any, HomeComponentState> {
             width: '100%',
         };
 
+        var headerStyle = {
+            flex: '0 0 auto'
+        };
+
+        var footerStyle = {
+            flex: '0 0 auto'
+        };
+
         return (
             <div style={divStyle}>
                 <div className="home-wrapper">
-                    <Header></Header>
-                    <div className="content-wrapper">
+                    <Header style={headerStyle}></Header>
+                    <div className="home-wrapper__content">
                         <h2>A better way to enjoy every day.</h2>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
-                        <p>Be the first to know when we launch.</p>
                         <p>Be the first to know when we launch.</p>
                         <Button>Request an invite</Button>
                     </div>
-                    <Footer></Footer>
+                    <Footer style={footerStyle}></Footer>
                 </div>
             </div>
         );

@@ -39,8 +39,11 @@ ul li a {
     width: 100%;
 }
 
-.content-wrapper {
+.home-wrapper__content {
     flex: 1 1 auto;
+    padding: 0 2em;
     position: relative;
     overflow-y: auto;
+    text-align: center;
+    margin-top: 4em;
 }

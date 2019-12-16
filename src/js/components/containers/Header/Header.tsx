@@ -2,7 +2,6 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 const StyledHeader = styled.div`
-    flex: 0 0 auto;
     background-color: #fff;
     width: 100%;
 
