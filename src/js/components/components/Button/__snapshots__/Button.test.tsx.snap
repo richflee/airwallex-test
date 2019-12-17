@@ -2,7 +2,8 @@
 
 exports[`Button changes the class when hovered 1`] = `
 <button
-  className="normal"
+  className="normal sc-bdVaJa ehfstA"
+  disabled={false}
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
   type="button"
@@ -13,7 +14,8 @@ exports[`Button changes the class when hovered 1`] = `
 
 exports[`Button changes the class when hovered 2`] = `
 <button
-  className="hovered"
+  className="hovered sc-bdVaJa ehfstA"
+  disabled={false}
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
   type="button"
@@ -24,7 +26,8 @@ exports[`Button changes the class when hovered 2`] = `
 
 exports[`Button changes the class when hovered 3`] = `
 <button
-  className="normal"
+  className="normal sc-bdVaJa ehfstA"
+  disabled={false}
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
   type="button"
