@@ -5,7 +5,7 @@ import Button from './Button';
 
 test('Button changes the class when hovered', () => {
     const component = renderer.create(
-        <Button>Foo</Button>,
+        <Button disabled={false}>Foo</Button>,
     );
     let tree = component.toJSON();
     expect(tree).toMatchSnapshot();

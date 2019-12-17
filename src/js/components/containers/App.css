@@ -29,7 +29,7 @@ ul li a {
 }
 
 #app {
-    width: 100%
+    width: 100%;
 }
 
 .home-wrapper {
@@ -46,4 +46,30 @@ ul li a {
     overflow-y: auto;
     text-align: center;
     margin-top: 4em;
+}
+
+.modal {
+    background-color: rgba(0, 0, 0, 0.25);
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
+}
+
+.modal div {
+    background-color: #fff;
+    height: 300px;
+    margin: 7em auto 0 auto;
+    padding: 1em;
+    overflow: hidden;
+    text-align: center;
+    width: 300px;
+}
+
+.modal div input {
+    box-sizing : border-box;
+    display: block;
+    padding: 1em;
+    width: 100%;
+    margin: 0 0 0.75em 0;
 }

@@ -9,11 +9,13 @@ const STATUS = {
 };
 
 interface ButtonComponentState {
-    class: string
+    class: string,
+    disabled: boolean
 }
 
 interface ButtonComponentProps {
-    onclick?: () => any
+    onclick?: () => any,
+    disabled?: boolean
 }
 
 
@@ -28,6 +30,10 @@ const StyledButton = styled.button`
     &:active {
         background-color: #357376;
     }
+    &:disabled {
+        background-color: burlywood;
+        color: rgba(1,1,1,0.3);
+    }
 `;
 
 
@@ -41,6 +47,7 @@ export default class Button extends React.Component<ButtonComponentProps, Button
 
         this.state = {
             class: STATUS.NORMAL,
+            disabled: props.disabled || false
         } as ButtonComponentState;
     }
 
@@ -55,6 +62,7 @@ export default class Button extends React.Component<ButtonComponentProps, Button
     render() {
         return (
             <StyledButton type="button"
+                disabled={this.props.disabled}
                 className={this.state.class}
                 onClick={this.props.onclick}
                 onMouseEnter={this._onMouseEnter}

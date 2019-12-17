@@ -1,18 +1,13 @@
 import * as React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Home from "./Home/Home";
-require('./App.css')
+require('./App.css');
 
 
-interface AppComponentState {
-    title: string
-}
-class App extends React.Component<any, AppComponentState> {
+class App extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
-        this.state = {
-            title: "React Boilerplate3000"
-        };
+        this.state = {};
     }
     render() {
         var divStyle = {
