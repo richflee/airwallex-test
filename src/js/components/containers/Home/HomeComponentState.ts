@@ -6,12 +6,13 @@ export enum RequestStatus {
 export interface HomeComponentState {
     errorMessage: string,
     showingModal: boolean,
-    showingRequestForm: boolean,
-    showingRequestResult: boolean,
+    showingRegistrationForm: boolean,
+    showingSuccessModal: boolean,
     requestStatus: RequestStatus
 }
 
 export interface RequestFormState {
+    errorMessage: string,
     fullNameValid: boolean,
     fullNameInput: string,
     emailInput: string,

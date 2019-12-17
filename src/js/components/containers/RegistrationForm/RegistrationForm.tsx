@@ -1,21 +1,12 @@
 import * as React from 'react';
-import styled from 'styled-components';
 import * as StringUtils from '../../../utils/string.utils';
 import { RequestFormState, RequestStatus } from '../Home/HomeComponentState';
 import Button from '../../components/Button/Button';
+import TextInput from '../../components/TextInput/TextInput';
+require('./RegistrationForm.css');
 
-const StyledRequestForm = styled.div`
-    > input {
-        border: 1px solid #6ba8a9;
-        border-radius: 0.25em;
-    }
 
-    .error {
-        color: tomato;
-    }
-`;
-
-export default class RequestForm extends React.Component<any, RequestFormState> {
+export default class RegistrationForm extends React.Component<any, RequestFormState> {
 
     constructor(props: any) {
         super(props);
@@ -26,6 +17,7 @@ export default class RequestForm extends React.Component<any, RequestFormState> 
             emailInput: '',
             emailConfirmationInput: '',
             validationMessage: '',
+            errorMessage: ''
         } as RequestFormState;
 
         this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -52,51 +44,69 @@ export default class RequestForm extends React.Component<any, RequestFormState> 
 
     handleEmailChange(event: any) {
         this.setState({
+            errorMessage: '',
             emailInputValid: !!this.isValidEmailFormat(event.target.value),
             emailInput: event.target.value,
             validationMessage: this.generateValidationMessage({ email: event.target.value, fullName: this.state.fullNameInput, emailConfirmation: this.state.emailConfirmationInput })
         });
+        this.props.onInputEdit();
     }
 
     handleEmailConfirmationChange(event: any) {
         this.setState({
+            errorMessage: '',
             emailConfirmationInputValid: event.target.value === this.state.emailInput,
             emailConfirmationInput: event.target.value,
             validationMessage: this.generateValidationMessage({ email: this.state.emailInput, fullName: this.state.fullNameInput, emailConfirmation: event.target.value })
         });
+        this.props.onInputEdit();
     }
 
     handleNameChange(event: any) {
         this.setState({
+            errorMessage: '',
             fullNameValid: event.target.value.length >= 3,
             fullNameInput: event.target.value,
             validationMessage: this.generateValidationMessage({ email: this.state.emailInput, fullName: event.target.value, emailConfirmation: this.state.emailConfirmationInput })
         });
+        this.props.onInputEdit();
     }
 
     isValidEmailFormat(input: string): boolean {
         return StringUtils.isValidEmailFormat(input);
     }
 
+    isValidForm(args: { fullName: string, email: string, emailConfirmation: string }): boolean {
+        return this.generateValidationMessage(args) === '';
+    }
+
     onSubmitHandler() {
         this.props.onSubmit({ email: this.state.emailInput, name: this.state.fullNameInput });
+    }
+
+    static getDerivedStateFromProps(props: any, state: RequestFormState) {
+        if (props.errorMessage !== state.errorMessage) {
+          return {
+            errorMessage: props.errorMessage
+          };
+        }
+        return null;
     }
 
     render() {
         const buttonTitle = this.props.requestStatus === RequestStatus.SENDING ? 'Sending, please wait...' : 'Send';
 
         return (
-            <StyledRequestForm>
-                <input placeholder="Full name" type="text" name="" id="fullName" value={this.state.fullNameInput}
-        onChange={this.handleNameChange} />
-                <input placeholder="Email" type="email" name="" id="emailInput"  value={this.state.emailInput}
-        onChange={this.handleEmailChange}/>
-                <input placeholder="Confirm email" type="email" name="" id="emailConfirmationInput"  value={this.state.emailConfirmationInput}
-        onChange={this.handleEmailConfirmationChange}/>
-                <Button onclick={() => this.onSubmitHandler()} disabled={ !(this.state.validationMessage === '' && !!this.state.fullNameInput && !!this.state.emailInput && !!this.state.emailConfirmationInput) || this.props.requestStatus === RequestStatus.SENDING }>{buttonTitle}</Button>
+            <div className="registration-form-container">
+                <TextInput placeholder="Full name" type="text" name="Full name" id="fullName" value={this.state.fullNameInput} handleInputChange={this.handleNameChange}></TextInput>
+                <TextInput placeholder="Email" type="text" name="Email address" id="emailInput" value={this.state.fullNameInput} handleInputChange={this.handleNameChange}></TextInput>
+                <TextInput placeholder="Confirm email" type="email" name="Confirm email" id="emailConfirmationInput" value={this.state.fullNameInput} handleInputChange={this.handleNameChange}></TextInput>
+                <Button onclick={() => this.onSubmitHandler()}
+                    disabled={ !this.isValidForm({ email: this.state.emailInput, fullName: this.state.fullNameInput, emailConfirmation: this.state.emailConfirmationInput }) || this.props.requestStatus === RequestStatus.SENDING }>
+                        {buttonTitle}</Button>
                 <p>{this.state.validationMessage}</p>
-                <p className="error">{this.props.errorMessage}</p>
-            </StyledRequestForm>
+                <p className="error">{this.state.errorMessage}</p>
+            </div>
         );
     }
 }

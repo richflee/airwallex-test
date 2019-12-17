@@ -2,9 +2,10 @@ import * as React from 'react';
 import Header from '../Header/Header';
 import Button from '../../components/Button/Button';
 import Footer from '../Footer/Footer';
-import RequestForm from '../RequestForm/RequestForm';
+import RegistrationForm from '../RegistrationForm/RegistrationForm';
 import { HomeComponentState, RequestStatus } from './HomeComponentState';
 import * as HttpService from '../../../utils/httpService.utils';
+require('./Home.css');
 
 export default class Home extends React.Component<any, HomeComponentState> {
     constructor(props: any) {
@@ -12,8 +13,8 @@ export default class Home extends React.Component<any, HomeComponentState> {
 
         this.state = {
             showingModal: false,
-            showingRequestForm: false,
-            showingRequestResult: false,
+            showingRegistrationForm: false,
+            showingSuccessModal: false,
             requestStatus: RequestStatus.IDLE,
             errorMessage: ''
         } as HomeComponentState;
@@ -21,29 +22,38 @@ export default class Home extends React.Component<any, HomeComponentState> {
         this.showRequestModal = this.showRequestModal.bind(this);
         this.sendRegistrationRequest = this.sendRegistrationRequest.bind(this);
         this.resetModalState = this.resetModalState.bind(this);
+        this.resetErrorMessage = this.resetErrorMessage.bind(this);
     }
 
     showRequestModal() {
         this.setState({
             showingModal: true,
-            showingRequestForm: true
+            showingRegistrationForm: true
         });
     }
 
-    showRequestResult(): void {
+    showSuccessModal(): void {
         this.setState({
             requestStatus: RequestStatus.IDLE,
-            showingRequestForm: false,
-            showingRequestResult: true
+            showingRegistrationForm: false,
+            showingSuccessModal: true
         });
     }
 
     resetModalState(): void {
         this.setState({
-            showingRequestForm: false,
-            showingRequestResult: false,
+            showingRegistrationForm: false,
+            showingSuccessModal: false,
             showingModal: false
         });
+    }
+
+    resetErrorMessage(): void {
+        if (this.state.errorMessage) {
+            this.setState({
+                errorMessage: ''
+            });
+        }
     }
 
     async sendRegistrationRequest(args: { email: string, name: string }) {
@@ -58,23 +68,26 @@ export default class Home extends React.Component<any, HomeComponentState> {
                 requestStatus: RequestStatus.IDLE
             });
         } else {
-            this.showRequestResult();
+            this.showSuccessModal();
         }
     }
 
     renderModal() {
-        if (this.state.showingModal && this.state.showingRequestForm) {
+        if (this.state.showingModal && this.state.showingRegistrationForm) {
             return (<div className="modal">
                 <div>
                     <div className="header-container">
                         <h3>Request an invite</h3>
                         <button onClick={this.resetModalState}>X</button>
                     </div>
-                    <RequestForm errorMessage={this.state.errorMessage} onSubmit={this.sendRegistrationRequest} requestStatus={this.state.requestStatus}></RequestForm>
+                    <RegistrationForm errorMessage={this.state.errorMessage}
+                        onInputEdit={this.resetErrorMessage}
+                        onSubmit={this.sendRegistrationRequest}
+                        requestStatus={this.state.requestStatus}></RegistrationForm>
                 </div>
             </div>);
         } 
-        else if (this.state.showingModal && this.state.showingRequestResult) {
+        else if (this.state.showingModal && this.state.showingSuccessModal) {
             return (<div className="modal">
                 <div>
                     <h3>All done!</h3>
