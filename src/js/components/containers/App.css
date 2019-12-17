@@ -32,14 +32,27 @@ ul li a {
     width: 100%;
 }
 
-.home-wrapper {
+.home-component-wrapper {
+    height: 100%;
+    width: 100%;
+}
+
+.home-component {
     display: flex;
     flex-direction: column;
     height: 100%;
     width: 100%;
 }
 
-.home-wrapper__content {
+.home-component__header {
+    flex: 0 0 auto;
+}
+
+.home-component__footer {
+    flex: 0 0 auto;
+}
+
+.home-component__content {
     flex: 1 1 auto;
     padding: 0 2em;
     position: relative;
@@ -56,7 +69,7 @@ ul li a {
     z-index: 1000;
 }
 
-.modal div {
+.modal > div {
     background-color: #fff;
     height: 300px;
     margin: 7em auto 0 auto;
@@ -72,4 +85,27 @@ ul li a {
     padding: 1em;
     width: 100%;
     margin: 0 0 0.75em 0;
+}
+
+.modal .header-container {
+    margin-bottom: 1em;
+    position: relative;
+}
+
+.modal .header-container > h3 {
+    line-height: 2;
+    margin: 0;
+    padding: 0;
+}
+
+.modal .header-container > button {
+    padding: 0.5em 1em;
+    background: lightgray;
+    border: none;
+    border-radius: 0.25em;
+    color: darkgrey;
+    cursor: pointer;
+    top: 0;
+    position: absolute;
+    right: 0;
 }

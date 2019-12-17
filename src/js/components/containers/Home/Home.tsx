@@ -2,9 +2,9 @@ import * as React from 'react';
 import Header from '../Header/Header';
 import Button from '../../components/Button/Button';
 import Footer from '../Footer/Footer';
-import * as StringUtils from '../../../utils/string.utils';
-import { HomeComponentState } from './HomeComponentState';
-
+import RequestForm from '../RequestForm/RequestForm';
+import { HomeComponentState, RequestStatus } from './HomeComponentState';
+import * as HttpService from '../../../utils/httpService.utils';
 
 export default class Home extends React.Component<any, HomeComponentState> {
     constructor(props: any) {
@@ -14,20 +14,13 @@ export default class Home extends React.Component<any, HomeComponentState> {
             showingModal: false,
             showingRequestForm: false,
             showingRequestResult: false,
-            fullNameValid: false,
-            fullNameInput: '',
-            emailInput: '',
-            emailConfirmationInput: '',
-            validationMessage: ''
+            requestStatus: RequestStatus.IDLE,
+            errorMessage: ''
         } as HomeComponentState;
 
         this.showRequestModal = this.showRequestModal.bind(this);
-        this.handleEmailChange = this.handleEmailChange.bind(this);
-        this.handleNameChange = this.handleNameChange.bind(this);
-        this.handleEmailConfirmationChange = this.handleEmailConfirmationChange.bind(this);
-        this.send = this.send.bind(this);
+        this.sendRegistrationRequest = this.sendRegistrationRequest.bind(this);
         this.resetModalState = this.resetModalState.bind(this);
-        this.generateValidationMessage = this.generateValidationMessage.bind(this);
     }
 
     showRequestModal() {
@@ -37,36 +30,9 @@ export default class Home extends React.Component<any, HomeComponentState> {
         });
     }
 
-    handleEmailChange(event: any) {
-        this.setState({
-            emailInputValid: !!this.isValidEmailFormat(event.target.value),
-            emailInput: event.target.value,
-            validationMessage: this.generateValidationMessage({ email: event.target.value, fullName: this.state.fullNameInput, emailConfirmation: this.state.emailConfirmationInput })
-        });
-    }
-
-    handleEmailConfirmationChange(event: any) {
-        this.setState({
-            emailConfirmationInputValid: event.target.value === this.state.emailInput,
-            emailConfirmationInput: event.target.value,
-            validationMessage: this.generateValidationMessage({ email: this.state.emailInput, fullName: this.state.fullNameInput, emailConfirmation: event.target.value })
-        });
-    }
-
-    handleNameChange(event: any) {
-        this.setState({
-            fullNameValid: event.target.value.length >= 3,
-            fullNameInput: event.target.value,
-            validationMessage: this.generateValidationMessage({ email: this.state.emailInput, fullName: event.target.value, emailConfirmation: this.state.emailConfirmationInput })
-        });
-    }
-
-    isValidEmailFormat(input: string): boolean {
-        return StringUtils.isValidEmailFormat(input);
-    }
-
     showRequestResult(): void {
         this.setState({
+            requestStatus: RequestStatus.IDLE,
             showingRequestForm: false,
             showingRequestResult: true
         });
@@ -76,59 +42,23 @@ export default class Home extends React.Component<any, HomeComponentState> {
         this.setState({
             showingRequestForm: false,
             showingRequestResult: false,
-            showingModal: false,
-            emailInput: '',
-            emailConfirmationInput: '',
-            fullNameInput: '',
-            fullNameValid: false,
-            emailInputValid: false,
-            emailConfirmationInputValid: false,
-            validationMessage: ''
+            showingModal: false
         });
     }
 
-    generateValidationMessage(args: { fullName: string, email: string, emailConfirmation: string }): string {
-        let msg = '';
-        if (args.fullName.length < 3) {
-            msg = 'Full name must be at least 3 characters in length.';
-        } else if (!args.email) {
-            msg = 'Please provide your email address.';
-        } else if (!this.isValidEmailFormat(args.email)) {
-            msg = 'Please provide a valid email address.';
-        } else if (!args.emailConfirmation) {
-            msg = 'Please confirm your email address.';
-        } else if (args.email !== args.emailConfirmation) {
-            msg = 'Both email addresses must match.';
-        }
-        return msg;
-    }
-
-    async postData(url = '', data = {}): Promise<any> {
-        // Default options are marked with *
-        const response = await fetch(url, {
-          method: 'POST', // *GET, POST, PUT, DELETE, etc.
-          mode: 'cors', // no-cors, *cors, same-origin
-          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-          credentials: 'same-origin', // include, *same-origin, omit
-          headers: {
-            'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          redirect: 'follow', // manual, *follow, error
-          referrer: 'no-referrer', // no-referrer, *client
-          body: JSON.stringify(data) // body data type must match "Content-Type" header
+    async sendRegistrationRequest(args: { email: string, name: string }) {
+        this.setState({
+            requestStatus: RequestStatus.SENDING
         });
-        return await response.json(); // parses JSON response into native JavaScript objects
-    }
+        const data = await HttpService.postRegistrationRequest({ "name": args.name, "email": args.email });
 
-    async send() {
-        console.log('TRYING'); // JSON-string from `response.json()` call
-        try {
-            const data = await this.postData('https://l94wc2001h.execute-api.ap-southeast-2.amazonaws.com/prod/fake-auth', { "name": "XXX", "email": "XXX" });
-            console.log('RESPONSE', JSON.stringify(data)); // JSON-string from `response.json()` call
+        if (data && data['errorMessage']) {
+            this.setState({
+                errorMessage: data['errorMessage'],
+                requestStatus: RequestStatus.IDLE
+            });
+        } else {
             this.showRequestResult();
-        } catch (error) {
-            console.error(error);
         }
     }
 
@@ -136,16 +66,11 @@ export default class Home extends React.Component<any, HomeComponentState> {
         if (this.state.showingModal && this.state.showingRequestForm) {
             return (<div className="modal">
                 <div>
-                    <h3>Request an invite</h3>
-                    <button onClick={this.resetModalState}>X</button>
-                    <input placeholder="Full name" type="text" name="" id="fullName" value={this.state.fullNameInput}
-          onChange={this.handleNameChange} />
-                    <input placeholder="Email" type="email" name="" id="emailInput"  value={this.state.emailInput}
-          onChange={this.handleEmailChange}/>
-                    <input placeholder="Confirm email" type="email" name="" id="emailConfirmationInput"  value={this.state.emailConfirmationInput}
-          onChange={this.handleEmailConfirmationChange}/>
-                    <p>{this.state.validationMessage}</p>
-                    <Button onclick={this.send} disabled={ !(this.state.validationMessage === '' && !!this.state.fullNameInput && !!this.state.emailInput && !!this.state.emailConfirmationInput) }>Send</Button>
+                    <div className="header-container">
+                        <h3>Request an invite</h3>
+                        <button onClick={this.resetModalState}>X</button>
+                    </div>
+                    <RequestForm errorMessage={this.state.errorMessage} onSubmit={this.sendRegistrationRequest} requestStatus={this.state.requestStatus}></RequestForm>
                 </div>
             </div>);
         } 
@@ -164,31 +89,17 @@ export default class Home extends React.Component<any, HomeComponentState> {
     }
 
     render() {
-
-        var divStyle = {
-            height: '100%',
-            width: '100%',
-        };
-
-        var headerStyle = {
-            flex: '0 0 auto'
-        };
-
-        var footerStyle = {
-            flex: '0 0 auto'
-        };
-
         return (
-            <div style={divStyle}>
+            <div className="home-component-wrapper">
                 {this.renderModal()}
-                <div className="home-wrapper">
-                    <Header style={headerStyle}></Header>
-                    <div className="home-wrapper__content">
+                <div className="home-component">
+                    <Header className="home-component__header"></Header>
+                    <div className="home-component__content">
                         <h2>A better way to enjoy every day.</h2>
                         <p>Be the first to know when we launch.</p>
                         <Button onclick={this.showRequestModal}>Request an invite</Button>
                     </div>
-                    <Footer style={footerStyle}></Footer>
+                    <Footer className="home-component__footer"></Footer>
                 </div>
             </div>
         );
