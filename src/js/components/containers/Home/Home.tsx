@@ -3,7 +3,7 @@ import Header from '../Header/Header';
 import Button from '../../components/Button/Button';
 import Footer from '../Footer/Footer';
 import RegistrationForm from '../RegistrationForm/RegistrationForm';
-import { HomeComponentState, RequestStatus } from './HomeComponentState';
+import { HomeComponentState, RequestStatus } from '../../../models/HomeComponentState';
 import * as HttpService from '../../../utils/httpService.utils';
 require('./Home.css');
 

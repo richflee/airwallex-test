@@ -1,12 +1,13 @@
 import * as React from 'react';
 import * as StringUtils from '../../../utils/string.utils';
-import { RequestFormState, RequestStatus } from '../Home/HomeComponentState';
+import { RegistrationFormState } from '../../../models/RegistrationFormState';
+import { RequestStatus } from '../../../models/HomeComponentState';
 import Button from '../../components/Button/Button';
 import TextInput from '../../components/TextInput/TextInput';
 require('./RegistrationForm.css');
 
 
-export default class RegistrationForm extends React.Component<any, RequestFormState> {
+export default class RegistrationForm extends React.Component<any, RegistrationFormState> {
 
     constructor(props: any) {
         super(props);
@@ -18,7 +19,7 @@ export default class RegistrationForm extends React.Component<any, RequestFormSt
             emailConfirmationInput: '',
             validationMessage: '',
             errorMessage: ''
-        } as RequestFormState;
+        } as RegistrationFormState;
 
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
@@ -84,7 +85,7 @@ export default class RegistrationForm extends React.Component<any, RequestFormSt
         this.props.onSubmit({ email: this.state.emailInput, name: this.state.fullNameInput });
     }
 
-    static getDerivedStateFromProps(props: any, state: RequestFormState) {
+    static getDerivedStateFromProps(props: any, state: RegistrationFormState) {
         if (props.errorMessage !== state.errorMessage) {
           return {
             errorMessage: props.errorMessage
