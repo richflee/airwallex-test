@@ -1,7 +1,19 @@
-# React Boilerplate
+# Airwallex Test - Broccoli & Co
 
-### Roadmap
+### Setup
 
-Coming soon...
+```sh
+$ npm install
+```
 
-Message your suggestions to @richflee on Twitter.
+### Run the app
+
+```sh
+$ npm start
+```
+
+### Run the tests
+
+```sh
+$ npm test
+```
