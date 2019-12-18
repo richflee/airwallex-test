@@ -70,9 +70,14 @@
     background: lightgray;
     border: none;
     border-radius: 0.25em;
-    color: darkgrey;
+    color: #fff;
     cursor: pointer;
+    font-weight: bold;
     top: 0;
     position: absolute;
     right: 0;
+}
+
+.modal .header-container > button:hover {
+    background-color: darkslategray;
 }

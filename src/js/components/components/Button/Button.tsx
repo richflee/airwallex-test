@@ -14,7 +14,8 @@ interface ButtonComponentState {
 }
 
 interface ButtonComponentProps {
-    onclick?: () => any,
+    className?: string,
+    onClick?: () => any,
     disabled?: boolean
 }
 
@@ -64,7 +65,7 @@ export default class Button extends React.Component<ButtonComponentProps, Button
             <StyledButton type="button"
                 disabled={this.props.disabled}
                 className={this.state.class}
-                onClick={this.props.onclick}
+                onClick={this.props.onClick}
                 onMouseEnter={this._onMouseEnter}
                 onMouseLeave={this._onMouseLeave}>
                 {this.props.children}

@@ -74,11 +74,11 @@ export default class Home extends React.Component<any, HomeComponentState> {
 
     renderModal() {
         if (this.state.showingModal && this.state.showingRegistrationForm) {
-            return (<div className="modal">
+            return (<div className="modal registration-modal">
                 <div>
                     <div className="header-container">
                         <h3>Request an invite</h3>
-                        <button onClick={this.resetModalState}>X</button>
+                        <Button className="header-container__close-btn" onClick={this.resetModalState}>X</Button>
                     </div>
                     <RegistrationForm errorMessage={this.state.errorMessage}
                         onInputEdit={this.resetErrorMessage}
@@ -92,7 +92,7 @@ export default class Home extends React.Component<any, HomeComponentState> {
                 <div>
                     <h3>All done!</h3>
                     <p>You will be one of the first to experience Broccoli & Co. when we launch</p>
-                    <Button onclick={this.resetModalState}>OK</Button>
+                    <Button onClick={this.resetModalState}>OK</Button>
                 </div>
             </div>);
         }
@@ -110,7 +110,8 @@ export default class Home extends React.Component<any, HomeComponentState> {
                     <div className="home-component__content">
                         <h2>A better way to enjoy every day.</h2>
                         <p>Be the first to know when we launch.</p>
-                        <Button onclick={this.showRequestModal}>Request an invite</Button>
+                        <Button className="home-component__request-btn"
+                            onClick={this.showRequestModal}>Request an invite</Button>
                     </div>
                     <Footer className="home-component__footer"></Footer>
                 </div>

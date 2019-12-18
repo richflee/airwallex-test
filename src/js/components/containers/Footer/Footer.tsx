@@ -7,10 +7,6 @@ const StyledFooter = styled.div`
 
     > div {
         padding: 1em;
-
-        h1 {
-            margin: 0;
-        }
     }
 `;
 
@@ -29,7 +25,7 @@ export default class Footer extends React.Component<any, FooterComponentState> {
         return (
             <StyledFooter>
                 <div>
-                    <div>Made w/ love in Melbourne.</div>
+                    <p>Made w/ love in Melbourne.</p>
                 </div>
             </StyledFooter>
         );

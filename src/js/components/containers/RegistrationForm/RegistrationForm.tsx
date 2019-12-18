@@ -102,7 +102,7 @@ export default class RegistrationForm extends React.Component<any, RegistrationF
                 <TextInput placeholder="Full name" type="text" name="Full name" id="fullName" value={this.state.fullNameInput} handleInputChange={this.handleNameChange}></TextInput>
                 <TextInput placeholder="Email" type="text" name="Email address" id="emailInput" value={this.state.fullNameInput} handleInputChange={this.handleNameChange}></TextInput>
                 <TextInput placeholder="Confirm email" type="email" name="Confirm email" id="emailConfirmationInput" value={this.state.fullNameInput} handleInputChange={this.handleNameChange}></TextInput>
-                <Button onclick={() => this.onSubmitHandler()}
+                <Button onClick={() => this.onSubmitHandler()}
                     disabled={ !this.isValidForm({ email: this.state.emailInput, fullName: this.state.fullNameInput, emailConfirmation: this.state.emailConfirmationInput }) || this.props.requestStatus === RequestStatus.SENDING }>
                         {buttonTitle}</Button>
                 <p>{this.state.validationMessage}</p>
