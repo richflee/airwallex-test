@@ -12,6 +12,16 @@ describe('Home component', () => {
     expect(wrapper.find('.home-component__request-btn')).toBeDefined();
   });
 
+  test('it renders Header component', () => {
+    const wrapper = mount(<Home />);
+    expect(wrapper.find('.home-component__header')).toHaveLength(1);
+  });
+
+  test('it renders Footer component', () => {
+    const wrapper = mount(<Home />);
+    expect(wrapper.find('.home-component__footer')).toHaveLength(1);
+  });
+
   describe('showSuccessModal', () => {
     test('it prompts success modal to be rendered', () => {
       const wrapper = shallow(<Home />);
