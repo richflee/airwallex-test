@@ -35,6 +35,7 @@ export default class Home extends React.Component<any, HomeComponentState> {
     showSuccessModal(): void {
         this.setState({
             requestStatus: RequestStatus.IDLE,
+            showingModal: true,
             showingRegistrationForm: false,
             showingSuccessModal: true
         });
@@ -88,7 +89,7 @@ export default class Home extends React.Component<any, HomeComponentState> {
             </div>);
         } 
         else if (this.state.showingModal && this.state.showingSuccessModal) {
-            return (<div className="modal">
+            return (<div className="modal success-modal">
                 <div>
                     <h3>All done!</h3>
                     <p>You will be one of the first to experience Broccoli & Co. when we launch</p>

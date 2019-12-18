@@ -11,6 +11,15 @@ describe('Home component', () => {
     const wrapper = shallow(<Home />);
     expect(wrapper.find('.home-component__request-btn')).toBeDefined();
   });
+
+  describe('showSuccessModal', () => {
+    test('it prompts success modal to be rendered', () => {
+      const wrapper = shallow(<Home />);
+      (wrapper.instance() as Home).showSuccessModal();
+      wrapper.update();
+      expect(wrapper.find('.success-modal')).toHaveLength(1);
+    });
+  });
 });
 
 describe('Request button', () => {
