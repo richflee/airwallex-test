@@ -32,14 +32,12 @@ describe('Request button', () => {
   test('it shows the correct initial text', () => {
     const wrapper = mount(<Home />);
     const btn = wrapper.find('.home-component__request-btn');
-    console.log('wrapper', wrapper);
-    console.log('btn', btn);
     expect(btn.text()).toEqual('Request an invite');
   });
 });
 
 describe('Registration modal close button', () => {
-  test('request button triggers function call to "resetModalState"', () => {
+  test('it triggers function call to "resetModalState"', () => {
     const fnSpy = jest.spyOn(Home.prototype, 'resetModalState');
     const wrapper = shallow(<Home />);
     wrapper.find('.home-component__request-btn').simulate('click');
