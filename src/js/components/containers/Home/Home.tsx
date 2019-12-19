@@ -6,7 +6,7 @@ import RegistrationForm from '../RegistrationForm/RegistrationForm';
 import { HomeComponentState, RequestStatus } from '../../../models/HomeComponentState';
 import * as HttpService from '../../../utils/httpService.utils';
 import { Modal } from '../../components/Modal/Modal';
-require('./Home.css');
+require('./Home.scss');
 
 export default class Home extends React.Component<any, HomeComponentState> {
     constructor(props: any) {

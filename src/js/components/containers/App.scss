@@ -1,10 +1,12 @@
+$main-highlight-color: #1d4d4f;
+
 html, body {
     height: 100%;
 }
 
 body {
     background: #e5dfdf;
-    color: #1d4d4f;
+    color: $main-highlight-color;
     display: flex;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 12px;
@@ -22,10 +24,10 @@ p {
 
 ul li {
     padding: 0.15em 0;
-}
 
-ul li a {
-    color: #1d4d4f;
+    a {
+        color: $main-highlight-color;
+    }
 }
 
 #app {

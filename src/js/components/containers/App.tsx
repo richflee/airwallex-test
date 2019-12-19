@@ -1,7 +1,7 @@
 import * as React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Home from "./Home/Home";
-require('./App.css');
+require('./App.scss');
 
 
 class App extends React.Component<any, any> {
