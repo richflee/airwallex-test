@@ -4,7 +4,7 @@ import { RegistrationFormState } from '../../../models/RegistrationFormState';
 import { RequestStatus } from '../../../models/HomeComponentState';
 import Button from '../../components/Button/Button';
 import TextInput from '../../components/TextInput/TextInput';
-require('./RegistrationForm.css');
+require('./RegistrationForm.scss');
 
 
 export default class RegistrationForm extends React.Component<any, RegistrationFormState> {

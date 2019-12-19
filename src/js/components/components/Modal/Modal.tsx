@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Button from '../Button/Button';
-require('./Modal.css');
+require('./Modal.scss');
 
 export const Modal = (props: any) => {
     const closeBtn = props.hideClose ? '' : (<Button className="header-container__close-btn" onClick={props.onCloseClick}>X</Button>);
