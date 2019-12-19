@@ -1,0 +1,54 @@
+.modal {
+    background-color: rgba(0, 0, 0, 0.25);
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
+}
+
+.modal > div {
+    background-color: #fff;
+    border-radius: 0.25em;
+    height: 300px;
+    margin: 7em auto 0 auto;
+    padding: 1em;
+    overflow: hidden;
+    text-align: center;
+    width: 300px;
+}
+
+.modal div input {
+    box-sizing : border-box;
+    display: block;
+    padding: 1em;
+    width: 100%;
+    margin: 0 0 0.75em 0;
+}
+
+.modal .header-container {
+    margin-bottom: 1em;
+    position: relative;
+}
+
+.modal .header-container > h3 {
+    line-height: 2;
+    margin: 0;
+    padding: 0;
+}
+
+.modal .header-container > button {
+    padding: 0.5em 1em;
+    background: lightgray;
+    border: none;
+    border-radius: 0.25em;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    top: 0;
+    position: absolute;
+    right: 0;
+}
+
+.modal .header-container > button:hover {
+    background-color: darkslategray;
+}

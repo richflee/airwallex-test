@@ -5,6 +5,7 @@ import Footer from '../Footer/Footer';
 import RegistrationForm from '../RegistrationForm/RegistrationForm';
 import { HomeComponentState, RequestStatus } from '../../../models/HomeComponentState';
 import * as HttpService from '../../../utils/httpService.utils';
+import { Modal } from '../../components/Modal/Modal';
 require('./Home.css');
 
 export default class Home extends React.Component<any, HomeComponentState> {
@@ -61,7 +62,7 @@ export default class Home extends React.Component<any, HomeComponentState> {
         this.setState({
             requestStatus: RequestStatus.SENDING
         });
-        const data = await HttpService.postRegistrationRequest({ "name": args.name, "email": args.email });
+        const data = await HttpService.postRegistrationRequest(args);
 
         if (data && data['errorMessage']) {
             this.setState({
@@ -75,27 +76,20 @@ export default class Home extends React.Component<any, HomeComponentState> {
 
     renderModal() {
         if (this.state.showingModal && this.state.showingRegistrationForm) {
-            return (<div className="modal registration-modal">
-                <div>
-                    <div className="header-container">
-                        <h3>Request an invite</h3>
-                        <Button className="header-container__close-btn" onClick={this.resetModalState}>X</Button>
-                    </div>
+            return (
+                <Modal name={"registration"} title={"Request an invite"} onCloseClick={this.resetModalState}>
                     <RegistrationForm errorMessage={this.state.errorMessage}
                         onInputEdit={this.resetErrorMessage}
                         onSubmit={this.sendRegistrationRequest}
                         requestStatus={this.state.requestStatus}></RegistrationForm>
-                </div>
-            </div>);
+                </Modal>
+            );
         } 
         else if (this.state.showingModal && this.state.showingSuccessModal) {
-            return (<div className="modal success-modal">
-                <div>
-                    <h3>All done!</h3>
+            return (<Modal name={"success"} title={"All done!"} hideClose={true}>
                     <p>You will be one of the first to experience Broccoli & Co. when we launch</p>
                     <Button onClick={this.resetModalState}>OK</Button>
-                </div>
-            </div>);
+            </Modal>);
         }
         else {
             return '';

@@ -24,7 +24,7 @@ describe('Home component', () => {
 
   describe('showSuccessModal', () => {
     test('it prompts success modal to be rendered', () => {
-      const wrapper = shallow(<Home />);
+      const wrapper = mount(<Home />);
       (wrapper.instance() as Home).showSuccessModal();
       wrapper.update();
       expect(wrapper.find('.success-modal')).toHaveLength(1);
@@ -42,7 +42,7 @@ describe('Request button', () => {
   });
   
   test('it prompts registration modal to be rendered', () => {
-    const wrapper = shallow(<Home />);
+    const wrapper = mount(<Home />);
     wrapper.find('.home-component__request-btn').simulate('click');
     wrapper.update();
     expect(wrapper.find('.registration-modal').length).toBe(1);
@@ -58,7 +58,7 @@ describe('Request button', () => {
 describe('Registration modal close button', () => {
   test('it triggers function call to "resetModalState"', () => {
     const fnSpy = jest.spyOn(Home.prototype, 'resetModalState');
-    const wrapper = shallow(<Home />);
+    const wrapper = mount(<Home />);
     wrapper.find('.home-component__request-btn').simulate('click');
     wrapper.update();
     wrapper.find('.header-container__close-btn').simulate('click');
